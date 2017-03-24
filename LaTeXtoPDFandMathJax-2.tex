@@ -301,7 +301,7 @@ Consider two vectors \(\bvec{a}\) and \(\bvec{b}\) drawn so their tails are at t
 \includegraphics[width=\gm\textwidth]{vectors.eps}
 \end{center}
 \caption{Two vectors with angle between them.}
-\label{test}
+\label{vectors}
 \end{figure}
 
 We define the scalar product of \(\bvec{a}\) and \(\bvec{b}\) as follows. 
@@ -355,7 +355,17 @@ Consider the vector \(\bvec{b} - \bvec{a} = \cvec{b_1 - a_1}{b_2 - a_2}\). The m
 \[
 \vmod{\bvec{b} - \bvec{a}} = \sqrt{(b_1 - a_2)^2 + (b_2 - a_2)^2}.
 \] 
-Note that the vectors \(\bvec{a}\), \(\bvec{b}\) and \(\bvec{b}-\bvec{a}\) form a triangle. Let \(\theta\) denote the angle between \(\bvec{a}\) and \(\bvec{b}\). Then, the cosine rule yields:
+Note from figure \ref{triangle} that the vectors \(\bvec{a}\), \(\bvec{b}\) and \(\bvec{b}-\bvec{a}\) form a triangle: 
+\begin{figure}[!h]
+\begin{center}
+\nextalt{Two vectors, labelled a and b, are drawn as line segments. Their start points coincide and their end points do not. There is an acute angle of theta between them. Forming a triangle, a third line segment, labelled b-a is added. This vector starts at the end point of a and ends at the end point of b. Each line segment has an arrow on it pointing from the start point to the end point.}
+\includegraphics[width=\gm\textwidth]{triangle.eps}
+\end{center}
+\caption{A triangle is formed by two vectors and their difference.}
+\label{triangle}
+\end{figure}
+
+Let \(\theta\) denote the angle between \(\bvec{a}\) and \(\bvec{b}\). Then, the cosine rule yields:
 %% When squaring the modulus we need to place the entire item
 %% to be square in braces otherwise some readers interpret the
 %% | as divides.
