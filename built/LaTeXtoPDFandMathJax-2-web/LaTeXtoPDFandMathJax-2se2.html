@@ -1,0 +1,153 @@
+<!DOCTYPE html> 
+
+<html
+> 
+<head
+><title
+>Using Matlab</title> 
+<meta
+ charset="UTF-8"></meta> 
+<meta
+ name="viewport" content="target-densitydpi=device-dpi; width=device-width; initial-scale=1.0; minimum-scale=1.0; user-scalable=yes;"></meta> 
+<meta
+ name="HandheldFriendly" content="True"></meta> 
+<meta
+ name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)"></meta> 
+<link
+ rel="stylesheet" type="text/css" href="LaTeXtoPDFandMathJax-2.css"></link> 
+<link
+ rel="stylesheet" type="text/css" href="additional.css"></link> 
+<script
+ type="text/x-mathjax-config"> 
+MathJax.Hub.Config({ explorer:{ subtitle: true }, 
+MatchWebFonts: { 
+matchFor: { "HTML-CSS": true, NativeMML: false, SVG: false }, 
+fontCheckDelay: 2000, 
+fontCheckTimeout: 30 * 1000 
+}, 
+"HTML-CSS": { 
+preferredFont: "STIX",  
+availableFonts: ["STIX","TeX"],  
+webFont: "STIX-Web",  
+linebreaks: { automatic: true, width: "60% container" } 
+}, 
+SVG: {  
+font: "STIX-Web", 
+linebreaks: { automatic: true, width: "60% container" } 
+}}); 
+</script> 
+<script
+ type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full"></script> 
+<style
+ type="text/css"> 
+".MathJax_MathML" {text-indent: 0;} 
+</style> 
+</head><body
+>
+<!--l. 407
+--><div
+ class="crosslinks"><p
+ class="noindent">[<a
+ href="LaTeXtoPDFandMathJax-2se1.html">prev</a>] [<a
+ href="LaTeXtoPDFandMathJax-2se1.html#tailLaTeXtoPDFandMathJax-2se1.html">prev-tail</a>] [<a
+ href="#tailLaTeXtoPDFandMathJax-2se2.html">tail</a>] [<a
+ href="LaTeXtoPDFandMathJax-2.html#LaTeXtoPDFandMathJax-2se2.html">up</a>] </p></div>
+<h3
+ class="sectionHead"><span
+ class="titlemark">2    </span> <a
+ href="LaTeXtoPDFandMathJax-2.html#QQ2-7-7" id="x7-60002">Using Matlab</a></h3>
+<!--l. 409
+--><p
+ class="noindent">Two calculate the scalar product in Matlab the <span
+ class="obeylines-h"><span
+ class="verb"><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">dot</span></span></span> function is used.
+</p><!--l. 411
+--><p
+ class="noindent">Create two vectors: </p><!--l. 412
+-->
+<div
+ class="lstlisting" id="listing-1"><span
+ class="label"><a
+ id="x7-6001r1"></a></span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#x3E;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">A</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">=</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">[4</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">-1</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">2];</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><br
+></br><span
+ class="label"><a
+ id="x7-6002r2"></a></span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#x3E;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">B</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">=</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">[2</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">-2</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">-1];</span>
+</div>
+<!--l. 417
+--><p
+ class="noindent">Calculate the scalar product: </p><!--l. 418
+-->
+<div
+ class="lstlisting" id="listing-2"><span
+ class="label"><a
+ id="x7-6003r1"></a></span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#x3E;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">C</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">=</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">dot</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">(</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">A</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">,</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">B</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">)</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><br
+></br><span
+ class="label"><a
+ id="x7-6004r2"></a></span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><br
+></br><span
+ class="label"><a
+ id="x7-6005r3"></a></span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">C</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">=</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">&#xA0;</span><span
+ class="DejaVuSansMono-tlf-t-1x-x-114">8</span>
+</div>
+                                                                                       
+                                                                                       
+<!--l. 424
+--><div
+ class="crosslinks"><p
+ class="noindent">[<a
+ href="LaTeXtoPDFandMathJax-2se1.html">prev</a>] [<a
+ href="LaTeXtoPDFandMathJax-2se1.html#tailLaTeXtoPDFandMathJax-2se1.html">prev-tail</a>] [<a
+ href="LaTeXtoPDFandMathJax-2se2.html">front</a>] [<a
+ href="LaTeXtoPDFandMathJax-2.html#LaTeXtoPDFandMathJax-2se2.html">up</a>] </p></div>
+<!--l. 424
+--><p
+ class="noindent"><a
+ id="tailLaTeXtoPDFandMathJax-2se2.html"></a> </p> 
+</body> 
+</html>

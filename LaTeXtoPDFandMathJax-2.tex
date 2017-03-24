@@ -1,0 +1,424 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Use a minimum font size of 12pt and specify a4paper
+%% for ease of display and printing in the UK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt,a4paper]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Geometry package to change margins etc.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\usepackage[a4paper,margin=2.5cm]{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Babel package to specify English typographical 
+%% rules, and hyphenation patterns
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[english]{babel}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% T1 font encoding to ensure characters with accents 
+%% and other non-ascii characters can be correctly 
+%% searched, copied and pasted in the PDF output. Also 
+%% enables hyphenation of words containing letters 
+%% with accents.
+%%
+%% Note, you should have cm-super installed otherwise
+%% computer modern fonts will be bitmaps. 
+%% If this is a problem then move this command inside
+%% a clearprint toggle below. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[T1]{fontenc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% This is the master for 3 document formats.
+%% We DO NOT support compiling via latex-dvips-ps2pdf. 
+%% If you wish to use diagrams which rely on this 
+%% then these should be produced as standalone figures 
+%% in PDF and svg formats and included in the LaTeX
+%% via the graphicx package.
+%%
+%% Standard print: Compiled via pdflatex. You can 
+%% style how you provided you can compile the other
+%% formats.
+%% 
+%% Clearprint: Compiled via pdflatex. 
+%%
+%% Accessible web pages via TeX4ht with MathJax
+%% as the renderer: for zoom, magnification, text to 
+%% speech (TextHelp Read & Write), screenreaders 
+%% (NVDA, JAWS 16+, ChromeVox, other Aria aware), 
+%% electronic braille (NVDA), also good on small 
+%% screens. 
+\usepackage{etoolbox}
+\newtoggle{clearprint}
+\newtoggle{web}
+%% The below uses the make file to determine which 
+%% format to compile. Please note that compilation 
+%% requires a post-2009 version of etoolbox and, for 
+%% the web format, a working copy of TeX4ht. 
+%% Using the makefile is the recommended compilation 
+%% method as this will produce a single zip containing
+%% the web format for you. 
+\input{toggle.tex}
+%% If you are NOT using the make file you may 
+%% uncomment one of the below:
+%%
+%% Standard print PDF. Compiled via pdflatex:
+%\togglefalse{clearprint}\togglefalse{web}
+%%
+%% Clear print PDF. Compiled via pdflatex: 
+%\toggletrue{clearprint}\togglefalse{web}
+%%
+%%Accessible web format. Requires TeX4ht - see 
+%% make file for commands to run: 
+%\togglefalse{clearprint}\toggletrue{web}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Standard packages loaded.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Only graphicx and the picture environment can 
+%% be used for graphics.  
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{hyperref}
+%%
+%% Graphicx must be loaded whether used or not as 
+%% TeX4ht compilation expects it.
+%% EPS diagrams can be used directly from TeXLive 2015
+%% onwards. Before this you will need to hand convert
+%% to PDF. 
+\usepackage{graphicx}
+\graphicspath{{./figures/}} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Other packages may not work for this process.
+%% See the second example for further packages. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Requirements for clearprint/web version
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifboolexpr{togl {clearprint} or togl {web}}{
+%% Change font to Helvetica and heavier verbatim font
+\renewcommand{\familydefault}{phv}
+\fontfamily{phv}\selectfont
+\usepackage[scaled=0.95]{DejaVuSansMono}
+
+%% Emphasis in bold only - add additional examples 
+%% as per resource
+\renewcommand{\em}{\bf}
+\renewcommand{\textit}{\textbf}
+\renewcommand{\emph}{\textbf}
+\renewcommand{\it}{\bf }
+
+%% Additional spacing - may not be honoured in 
+%% web version
+\setlength{\parindent}{0.0pt}
+\setlength{\parskip}{1.0\baselineskip}
+\renewcommand{\baselinestretch}{1.25}\selectfont
+\mathsurround 0.2em
+\setlength{\arraycolsep}{0.2em}\renewcommand{\arraystretch}{1.25}
+\addtolength{\jot}{0.5\baselineskip}
+\sloppy
+\allowdisplaybreaks
+\newcommand{\gm}{0.625}
+}{
+\newcommand{\gm}{0.5}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% To include code listings use the listings package. 
+%% Also load spverbatim for a basic verbatim environment which can line break if needed
+\usepackage{spverbatim}
+\usepackage{listings} 
+\lstloadlanguages{Matlab} %Other languages are available, see manual, you should select the correct language
+\lstset{
+basicstyle=\ttfamily, 
+breaklines=true, 
+columns=fixed 
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Commands used to provide alternative text for 
+%% diagrams for a screenreader user.
+%% DO NOT remove the macros from the preamble even if
+%% you are not using them as the web compilation 
+%% expects them to be defined.
+\newcommand{\nextalt}[1]{} 
+\newcommand{\PICalt}[1]{{#1}} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% You can style your theorems etc. as you like but 
+%% in clearprint and accessible web use a clearprint 
+%% style to open up spacing, use bold for emphasis 
+%% and to avoid large parts of text in italics. 
+\ifboolexpr{togl {clearprint} or togl {web}}
+{
+\newtheoremstyle{clearprint}
+{20pt}% space above
+{3pt}% space below
+{}% body font
+{}% indent amount
+{\bfseries}% theorem head font
+{.\newline }% punctuation after theorem head
+{1.0em}% space after theorem head
+{}% theorem head spec, can be left empty meaning normal
+\theoremstyle{clearprint}
+\newenvironment{Proof}
+{\noindent{\bf Proof.}\hspace*{1em}}% Begin
+{\qed\par}% End
+%% When redefining an environment it is vital that it has 
+%% the same number of arguments as the original
+\renewenvironment{proof}[1][\proofname]
+{\noindent{\bf {#1}.}\hspace*{1em}}% Begin
+{\qed\par}% End
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Leave a blank line after this
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% In default style in standard print
+\newtheorem{proposition}{Proposition}[section]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Change to definition style for the standard print
+\ifboolexpr{togl {clearprint} or togl {web}}
+{\theoremstyle{clearprint}}
+{\theoremstyle{definition}}
+%% Leave a blank line after this
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% In definition style unless in clearprint
+\newtheorem{definition}[proposition]{Definition}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Change to remark style for the standard print
+\ifboolexpr{togl {clearprint} or togl {web}}
+{\theoremstyle{clearprint}}
+{\theoremstyle{remark}}
+%% Leave a blank line after this
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% In remark style unless in clearprint
+\newtheorem{remark}[proposition]{Remark}
+\newtheorem{example}[proposition]{Example}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Place any document specific commands here
+\newcommand{\bvec}[1]{\mathrm{\mathbf{#1}}}
+\newcommand{\cvec}[2]{\begin{pmatrix} #1 \\ #2 \end{pmatrix}} 
+\newcommand{\vmod}[1]{\lvert #1 \rvert}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Define front matter
+\title{LaTeX to PDF and MathJax: Example 2}
+\author{Emma Cliffe}
+\date{2017}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Ensure front matter and table of contents are 
+%% page numbered separately from the body
+%% Use headings style so that each page has a label
+\ifboolexpr{togl {clearprint} or togl {web}}{
+\pagestyle{headings}
+\pagenumbering{roman}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% End the preamble
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% In longer documents place a newpage before the tables
+%% You may not want all of the tables in all formats
+%% \newpage 
+\tableofcontents
+\listoffigures
+%\listoftables
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Page numbering for the body of the document starts
+\pagenumbering{arabic}
+\setcounter{page}{1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% If a section/subsection/subsubsection is unnumbered
+%% but it makes sense to add it to the table of 
+%% contents for the web version then add contents
+%% line by hand. 
+\section*{Using this document}
+\ifboolexpr{not (togl {web})}{\addcontentsline{toc}{section}{Using this document}}
+
+This is a second example of a document compiled from \LaTeX~ into multiple formats. 
+\begin{itemize} 
+\item \href{https://stem-enable.github.io/LaTeXtoPDFandMathJax-Example2/LaTeXtoPDFandMathJax-2-standard.pdf}{Standard print PDF}
+\item \href{https://stem-enable.github.io/LaTeXtoPDFandMathJax-Example2/LaTeXtoPDFandMathJax-2-clear.pdf}{Clearer print PDF}
+\item \href{https://stem-enable.github.io/LaTeXtoPDFandMathJax-Example2/}{Accessible web format}
+\end{itemize}
+
+The outputs can be used to test setups and as a second example for students to try out. 
+
+\newpage
+\section{The scalar product}
+
+Consider two vectors \(\bvec{a}\) and \(\bvec{b}\) drawn so their tails are at the same point. 
+\begin{figure}[!h]
+\begin{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Add alternative text for the image (in the web 
+%% version only. Ensure this is called before the 
+%% \includegraphics command
+\nextalt{Two vectors, labelled a and b, are drawn as line segments. Their start points coincide and their end points do not. There is an acute angle of theta between them. Each line segment has an arrow on it pointing from the start point to the end point.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% You may include EPS (TeXLive 2015+), PDF, JPG or PNG. 
+%% Generally you should try to use EPS, PDF or SVG as
+%% the master format as these are vector formats which
+%% can be zoomed appropriately.
+%%
+%% If you include PDF you must also convert the PDF 
+%% to SVG format before the web version can be compiled. 
+%% The SVG should have the same base file name and be 
+%% in the same directory as the PDF. It will be picked up
+%% automatically. 
+%% 
+%% If you include EPS from TeXLive 2015 onwards then
+%% graphicx will automatically convert the file to 
+%% a PDF. You will then need to convert these to SVG
+%% but with the same base file name as the EPS (not the PDF). 
+%%
+%% You must specify the file format to be included 
+%% explicitly as .pdf, .jpg or .png. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\includegraphics[width=\gm\textwidth]{vectors.eps}
+\end{center}
+\caption{Two vectors with angle between them.}
+\label{test}
+\end{figure}
+
+We define the scalar product of \(\bvec{a}\) and \(\bvec{b}\) as follows. 
+
+\begin{definition}[Scalar product]
+The \emph{scalar product} of \(\bvec{a}\) and \(\bvec{b}\) is
+%% We must use \lvert and \rvert to ensure that they are matched
+%% in the web rendering. \left| and \right| will not be read
+%% aloud correctly. | and | may differ in size.  
+\[
+\bvec{a}\cdot \bvec{b} = \lvert\bvec{a}\rvert \lvert\bvec{b}\rvert \cos \theta
+\]
+where
+\begin{itemize}
+\item \(\lvert\bvec{a}\rvert\) is the modulus of \(\bvec{a}\),
+\item \(\lvert\bvec{b}\rvert\) is the modulus of \(\bvec{b}\), and
+\item \(\theta\) is the angle between \(\bvec{a}\) and \(\bvec{b}\). 
+\end{itemize}
+\end{definition}
+
+\begin{remark}
+It is important to use the dot symbol for the scalar product (also called the dot product). You must not use a \(\times\) symbol as this denotes the vector product which is defined differently. 
+\end{remark}
+
+\begin{example}
+Let 
+\[
+\bvec{a} = \cvec{2}{2} \quad \text{and} \quad \bvec{b} = \cvec{4}{0}.
+\]
+The angle between these vectors is \(\theta = {45}^{\circ}\). Then \(\vmod{\bvec{a}} = \sqrt{8} \) and \(\vmod{\bvec{b}} = 4\). So, 
+\begin{align*}
+\bvec{a} \cdot \bvec{b} = \cvec{2}{2}\,\cdot\, \cvec{4}{0} &= \vmod{\bvec{a}}\vmod{\bvec{b}}\cos\theta \\
+&= \sqrt{8} \times 4 \times \cos {45}^{\circ} \\
+&= 4\sqrt{8}\times \frac{1}{\sqrt{2}} = 4\frac{\sqrt{8}}{\sqrt{2}} = 4\sqrt{4} = 8.
+\end{align*} 
+Note that the result is a scalar, not a vector. 
+\end{example}
+
+\subsection{Vectors in cartesian form}
+
+When vectors are given in cartesian form there is an alternative formula for calculating the scalar product. 
+\begin{proposition}
+If \(\bvec{a} = a_1\bvec{i} + a_2\bvec{j}\) and \(\bvec{b} = b_1\bvec{i} + b_2\bvec{j}\) then
+\[
+\bvec{a} \cdot \bvec{b} = a_1b_1 + a_2b_2.
+\]
+\end{proposition}
+
+\begin{proof}
+Consider the vector \(\bvec{b} - \bvec{a} = \cvec{b_1 - a_1}{b_2 - a_2}\). The modulus of this is
+\[
+\vmod{\bvec{b} - \bvec{a}} = \sqrt{(b_1 - a_2)^2 + (b_2 - a_2)^2}.
+\] 
+Note that the vectors \(\bvec{a}\), \(\bvec{b}\) and \(\bvec{b}-\bvec{a}\) form a triangle. Let \(\theta\) denote the angle between \(\bvec{a}\) and \(\bvec{b}\). Then, the cosine rule yields:
+\begin{equation}
+\label{cosrule}
+\vmod{\bvec{b}-\bvec{a}}^2 = \vmod{\bvec{a}}^2 + \vmod{\bvec{b}}^2 - 2\vmod{\bvec{a}}\vmod{\bvec{b}}\cos\theta. 
+\end{equation} 
+Substituting the definition of the scalar product of \(\bvec{a}\) and \(\bvec{b}\) into equation \ref{cosrule} gives:
+\[
+\vmod{\bvec{b}-\bvec{a}}^2 = \vmod{\bvec{a}}^2 + \vmod{\bvec{b}}^2 - 2\left(\bvec{a}\cdot \bvec{b}\right).
+\] 
+Rearranging:
+\[
+\left(\bvec{a}\cdot \bvec{b}\right) = \frac{1}{2}\left(\vmod{\bvec{a}}^2 + \vmod{\bvec{b}}^2 - \vmod{\bvec{b}-\bvec{a}}^2\right).
+\]
+Writing this in terms of components produces:
+\begin{align*}
+\left(\bvec{a}\cdot \bvec{b}\right) &= \frac{1}{2}\left(a_1^2 + a_2^2 + b_1^2 + b_2^2 - (b_1 - a_1)^2 - (b_2 - a_2)^2\right)\\
+&=\frac{1}{2}\left(a_1^2 + a_2^2 + b_1^2 + b_2^2 - b_1^2 + 2b_1a_1 - a_1^2 - b_2^2 + 2b_2a_2 - a_2^2\right)\\
+&=\frac{1}{2}\left(2b_1a_1 + 2b_2a_2\right)\\
+&=a_1b_1 + a_2b_2
+\end{align*}
+as required. 
+\end{proof}
+
+\begin{example}
+Consider again the vectors
+\[
+\bvec{a} = \cvec{2}{2} \quad \text{and} \quad \bvec{b} = \cvec{4}{0}.
+\]
+Calculating the scalar product using the components:
+\[
+\bvec{a} \cdot \bvec{b} = a_1b_1 + a_2b_2 = 2\times 4 + 2\times 0 = 8. 
+\]
+
+Note that if we are given vectors in this form, the scalar product may be used to calculate the angle between them. Since \(\bvec{a} \cdot \bvec{b} = 8\) and we have:
+\begin{align*}
+\vmod{\bvec{a}} &= \sqrt{8}\\
+\vmod{\bvec{b}} &= 4.
+\end{align*}
+Hence,
+\begin{align*}
+8 = \bvec{a} \cdot \bvec{b} &= \vmod{\bvec{a}}\vmod{\bvec{b}}\cos\theta\\
+&= 4\sqrt{8}\cos \theta.
+\end{align*}
+Rearranging:
+\[
+\theta = \cos^{-1}\left(\frac{8}{4\sqrt{8}}\right) = {45}^{\circ}.
+\]
+\end{example}
+
+\section{Using Matlab}
+
+Two calculate the scalar product in Matlab the \spverb=dot= function is used. 
+
+Create two vectors:
+\begin{lstlisting}
+> A = [4 -1 2];
+> B = [2 -2 -1];
+\end{lstlisting}
+
+Calculate the scalar product:
+\begin{lstlisting}
+> C = dot(A,B)
+    
+    C = 8
+\end{lstlisting}
+
+\end{document}
