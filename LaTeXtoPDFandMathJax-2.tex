@@ -356,17 +356,20 @@ Consider the vector \(\bvec{b} - \bvec{a} = \cvec{b_1 - a_1}{b_2 - a_2}\). The m
 \vmod{\bvec{b} - \bvec{a}} = \sqrt{(b_1 - a_2)^2 + (b_2 - a_2)^2}.
 \] 
 Note that the vectors \(\bvec{a}\), \(\bvec{b}\) and \(\bvec{b}-\bvec{a}\) form a triangle. Let \(\theta\) denote the angle between \(\bvec{a}\) and \(\bvec{b}\). Then, the cosine rule yields:
+%% When squaring the modulus we need to place the entire item
+%% to be square in braces otherwise some readers interpret the
+%% | as divides.
 \begin{equation}
 \label{cosrule}
-\vmod{\bvec{b}-\bvec{a}}^2 = \vmod{\bvec{a}}^2 + \vmod{\bvec{b}}^2 - 2\vmod{\bvec{a}}\vmod{\bvec{b}}\cos\theta. 
+{\vmod{\bvec{b}-\bvec{a}}}^2 = {\vmod{\bvec{a}}}^2 + {\vmod{\bvec{b}}}^2 - 2\vmod{\bvec{a}}\vmod{\bvec{b}}\cos\theta. 
 \end{equation} 
 Substituting the definition of the scalar product of \(\bvec{a}\) and \(\bvec{b}\) into equation \ref{cosrule} gives:
 \[
-\vmod{\bvec{b}-\bvec{a}}^2 = \vmod{\bvec{a}}^2 + \vmod{\bvec{b}}^2 - 2\left(\bvec{a}\cdot \bvec{b}\right).
+{\vmod{\bvec{b}-\bvec{a}}}^2 = {\vmod{\bvec{a}}}^2 + {\vmod{\bvec{b}}}^2 - 2\left(\bvec{a}\cdot \bvec{b}\right).
 \] 
 Rearranging:
 \[
-\left(\bvec{a}\cdot \bvec{b}\right) = \frac{1}{2}\left(\vmod{\bvec{a}}^2 + \vmod{\bvec{b}}^2 - \vmod{\bvec{b}-\bvec{a}}^2\right).
+\left(\bvec{a}\cdot \bvec{b}\right) = \frac{1}{2}\left({\vmod{\bvec{a}}}^2 + {\vmod{\bvec{b}}}^2 - {\vmod{\bvec{b}-\bvec{a}}}^2\right).
 \]
 Writing this in terms of components produces:
 \begin{align*}
