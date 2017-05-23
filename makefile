@@ -47,8 +47,9 @@ web: clean mathml.4ht unicode.4hf mathjaxMMLWord.cfg
 	cd built; [ ! -f $(NAME)-web.zip ] || rm -f $(NAME)-web.zip; zip -r $(NAME)-web.zip $(NAME)-web; cd ..
 #Create a pseudo home page for the github pages site
 	cp built/$(NAME)-web/$(NAME).html built/$(NAME)-web/index.html
-#Put copies of the PDFs in the web space so they can be accessed
+#Put copies of the PDFs and docx in the web space so they can be accessed
 	cp built/$(NAME)-*.pdf built/$(NAME)-web/
+	cp built/$(NAME).docx built/$(NAME)-web/
 
 #To transform to Word we need to use the web transform but without breaking into sections and then use Pandoc 19+
 word: clean mathml.4ht unicode.4hf groupmn.4xt mathjaxMMLWord.cfg additional.css
