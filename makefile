@@ -1,4 +1,4 @@
-﻿.PHONY: standard clear web clean
+﻿.PHONY: clean standard clear word web
 #Change the name to the main tex file without the file extension.
 NAME=LaTeXtoPDFandMathJax-2
 LATEX=pdflatex
@@ -26,13 +26,13 @@ clear: clean
 	mv $(NAME).pdf built/$(NAME)-clear.pdf
 
 #We require some additional files for everything to work. 
-web: clean mathml.4ht unicode.4hf mathjaxMML.cfg 
+web: clean mathml.4ht unicode.4hf mathjaxMMLWord.cfg 
 	[ ! -f toggle.tex ] || rm -f toggle.tex
 	echo "\\\\togglefalse{clearprint}\\\\toggletrue{web}" > toggle.tex
 #htlatex needs to run twice to prevent disruption to the sectioning tree caused by e.g. footnotes
 #Note, yes this does run latex 6 times! It is a reported bug: https://puszcza.gnu.org.ua/bugs/index.php?197
-	htlatex $(NAME).tex "mathjaxMML.cfg,3,sections+,fonts-,charset=utf-8" " -cunihtf -utf8"
-	htlatex $(NAME).tex "mathjaxMML.cfg,3,sections+,fonts-,charset=utf-8" " -cunihtf -utf8"
+	htlatex $(NAME).tex "mathjaxMMLWord.cfg,3,sections+,fonts-,charset=utf-8" " -cunihtf -utf8"
+	htlatex $(NAME).tex "mathjaxMMLWord.cfg,3,sections+,fonts-,charset=utf-8" " -cunihtf -utf8"
 #The postprocess is slow, required to produce numbers rather than digits when spoken aloud but requires correct
 #html output. Such things as unmatched brackets can cause problems. If you can't locate the error and can put
 #up with digits instead of numbers then comment out the next line as the web browser and mathjax are less fussy.
@@ -50,6 +50,28 @@ web: clean mathml.4ht unicode.4hf mathjaxMML.cfg
 #Put copies of the PDFs in the web space so they can be accessed
 	cp built/$(NAME)-*.pdf built/$(NAME)-web/
 
+#To transform to Word we need to use the web transform but without breaking into sections and then use Pandoc 19+
+word: clean mathml.4ht unicode.4hf groupmn.4xt mathjaxMMLWord.cfg additional.css
+	[ ! -f toggle.tex ] || rm -f toggle.tex
+	echo "\\\\togglefalse{clearprint}\\\\toggletrue{web}" > toggle.tex
+#htlatex needs to run twice to prevent disruption to the sectioning tree caused by e.g. footnotes
+#Note, yes this does run latex 6 times! It is a reported bug: https://puszcza.gnu.org.ua/bugs/index.php?197
+#Note that we are not breaking into sections for the Word transform
+#fn-in stops us from losing the footnotes in the Word format: https://tex.stackexchange.com/questions/195551/how-to-add-footnotes-in-htlatex-via-fn-in
+	htlatex $(NAME).tex "mathjaxMMLWord.cfg,sections+,fonts-,fn-in,charset=utf-8" " -cunihtf -utf8"
+	htlatex $(NAME).tex "mathjaxMMLWord.cfg,sections+,fonts-,fn-in,charset=utf-8" " -cunihtf -utf8"
+#The postprocess is slow, required to produce numbers rather than digits when spoken aloud but requires correct
+#html output. Such things as unmatched brackets can cause problems. If you can't locate the error and can put
+#up with digits instead of numbers then comment out the next line as the web browser and mathjax are less fussy.
+#We don't seem to need to postprocess to get correct reading in the docx. 
+#However, this hasn't been tested extensively yet. 
+#	./postprocess.sh
+#To get styled theorems we are going to need to do something like http://pandoc.org/MANUAL.html#custom-styles-in-docx-output but this will require us to do some nasty poking.
+	pandoc -s -f html -t docx $(NAME).html -o $(NAME).docx --reference-docx=reference.docx
+	mv $(NAME).docx built/
+
 clean:
 	rm -f *.aux *.log *.toc *~ *.out *.html *.4ct *.4tc *.dvi *.idv *.tmp *.xref *.lg *.lof *.lot $(NAME).css $(NAME)*x.png $(NAME)-standard.pdf $(NAME)-clear.pdf
 
+cleanfigures: 
+	rm -f ./figures/*.svg

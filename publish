@@ -1,0 +1,1 @@
+git subtree push --prefix built/LaTeXtoPDFandMathJax-2-web origin gh-pages
